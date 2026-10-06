@@ -36,4 +36,12 @@ def writesave(progress):
         return False
 
 def compile(progress):
-    pass
+    return "placeholder"
+
+if __name__ == "__main__":
+    import pyfiglet
+    rendertext = pyfiglet.figlet_format("WARNING", font="slant")
+    print(rendertext)
+    print("This module is for developer test only")
+    print(writesave("placeholder"))
+    print(readsave())
