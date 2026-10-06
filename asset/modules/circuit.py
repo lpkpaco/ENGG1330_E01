@@ -3,8 +3,8 @@ def generate_circuit(difficulty):
     locale.setlocale(locale.LC_ALL, "")
     def main(stdscr):
         curses.start_color()
-        curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
-        curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_WHITE)
+        #curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
+        #curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_WHITE)
         stdscr.clear()
         objects = ["█", "◯", "⊖", "⌽", "☇", "⚑"]
         marked = []
