@@ -9,7 +9,7 @@ def readsave():
                 is_save.append(file)
         return is_save
 
-def writesave():
+def writesave(progress):
     from contextlib import chdir
     from pathlib import Path
     try:
