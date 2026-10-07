@@ -13,10 +13,10 @@ def get_char(stdscr, currenty, currentx):
     except:
         return " "
 
-def validate(stdscr, objects, starty, end_y, renderx, rendery):
+def validate(stdscr, objects, start_y, end_y, renderx, rendery):
     directions = {objects[1]: (-1, 0), objects[2]: (1, 0), objects[3]: (0, -1), objects[4]: (0, 1)} #yx
     inverse_directions = {(-1, 0): objects[1], (1, 0): objects[2], (0, -1): objects[3], (0, 1): objects[4]} #yx as well
-    y, x = starty, 0
+    y, x = start_y, 0
     found = False
     for dx, dy in ((0, -1), (0, 1), (1, 0), (-1, 0)):
         newx, newy = x + dx, y + dy
