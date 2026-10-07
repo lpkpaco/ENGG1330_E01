@@ -12,6 +12,8 @@ def get_char(stdscr, currenty, currentx):
             return " "
     except:
         return " "
+
+
 def generate_circuit(difficulty):
     import curses, secrets, locale
     locale.setlocale(locale.LC_ALL, "")
@@ -47,7 +49,6 @@ def generate_circuit(difficulty):
             print(blocked_coor)
             print(len(blocked_coor))
         stdscr.refresh()
-        stdscr.getch()
         currentx, currenty = 0, start_y
         lastx, lasty = 0, start_y
         while True:
