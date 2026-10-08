@@ -1,3 +1,4 @@
 saves/*
 venv1330/*
-asset/modules/saves/*
+asset/modules/__pycache__/*
+__pycache__/*
