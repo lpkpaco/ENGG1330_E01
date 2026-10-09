@@ -144,6 +144,7 @@ def generate_circuit(difficulty, renderx, rendery):
                 if validate(stdscr, objects, start_y, end_y, renderx, rendery):
                     stdscr.addstr(0, 0, "Success".ljust(40))
                     stdscr.refresh()
+                    return True
                 else:
                     stdscr.addstr(0, 0, "Failed".ljust(40))
                     stdscr.refresh()

@@ -29,7 +29,7 @@ ENGG1330 Group E01
 
     **generate_circuit([difficulty], [width], [height])**
     
-    Usage: Starts the circuit puzzle. Returns nothing.
+    Usage: Starts the circuit puzzle. Returns True if passed puzzle.
     - difficulty = Number of blocked tiles. Type: int
     - width and height = Dimensions of the rendered game screen. Type: int
 
