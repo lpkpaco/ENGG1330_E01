@@ -17,13 +17,20 @@ def load_main_menu(menuscr):
     menuscr.refresh()
     newgame = curses.newwin(5, 20, 9, 30)
     newgame.box()
-    newgame.addstr(2, 4, "New Game")
+    newgame.addstr(2, 4, "1. New Game")
     newgame.refresh()
     loadgame = curses.newwin(5, 20, 14, 30)
     loadgame.box()
-    loadgame.addstr(2, 4, "Load Game")
+    loadgame.addstr(2, 4, "2. Load Game")
     loadgame.refresh()
+    menuscr.keypad(True)
     menuscr.getch()
-
+    button = 0
+    while True:
+        key = menuscr.getkey()
+        if key == "1":
+            pass
+        elif key == "2":
+            pass
 if __name__ == "__main__":
     curses.wrapper(load_main_menu)
