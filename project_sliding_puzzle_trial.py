@@ -5,7 +5,6 @@ answer = ["00","01","02","03","04","05","06","07","08","09","10","11","12","13",
 random.shuffle(number_list)
 print("\n"*2)
 matrix = []
-#initiate game
 temp = number_list[:]
 while number_list != []:
     matrix.append(number_list[:4])
@@ -17,16 +16,16 @@ for i in matrix:
     print(f"|{i[0]}|{i[1]}|{i[2]}|{i[3]}|")
     #print(number_list)
 
-#game play
 while number_list != answer:
-    move = input("Move a tile:")
-    original_position = number_list.index(move)
+    try:
+        move = input("Move a tile:")
+        original_position = number_list.index(move)
+    except ValueError:
+        print("Input not in number list")
+        continue
     number_list[number_list.index("00")] = move
-    #print(number_list)
     number_list[original_position] = "00"
-    #print(number_list)
     temp = number_list[:]
-    #create matrix
     matrix = []
     while number_list != []:
             matrix.append(number_list[:4])
@@ -34,7 +33,7 @@ while number_list != answer:
     print(matrix)
     number_list = temp[:]
     print(number_list)
-    #draw board
+
     for i in matrix:
         print(f"|{i[0]}|{i[1]}|{i[2]}|{i[3]}|")
 
