@@ -20,7 +20,7 @@ while inversion_count == 0 or inversion_count%2 != 0:
     if inversion_count % 2 != 0:
         random.shuffle(number_list)
         inversion_count = 0
-        continue
+
 print(inversion_count)
 print("\n"*2)
 #print(inversion_count)

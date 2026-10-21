@@ -5,7 +5,6 @@ def sliding_game():
     x = 0
     y = 0
     inversion_count = 0
-    zero_postion = ()
     move_postion = ()
     random.shuffle(number_list)
     a = list(map(int,number_list))
