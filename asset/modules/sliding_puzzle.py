@@ -19,7 +19,6 @@ def sliding_puzzle():
         if inversion_count % 2 != 0:
             random.shuffle(number_list)
             inversion_count = 0
-            continue
     print("\n"*2)
     matrix = []
     temp = number_list[:]
@@ -53,7 +52,6 @@ def sliding_puzzle():
                     for k in i:
                         if "00" == k:
                             x = i.index(k)
-        zero_postion = (x,y)
         #eliminate non-adjacent
         if move_postion not in [(x+1,y),(x,y+1),(x-1,y),(x,y-1)]:
             print("Tile not adjacent to blank")
