@@ -4,6 +4,8 @@ name = input('Enter your name: ').strip()
 
 #define a function for the game to start
 
+#print the game title
+
 print('''Attention all citizens. This is an emergency broadcast. A nuclear war has broken out. Seek for a designated shelter near you immediately.\nI repeat, seek for a designated shelter near you immediately. Remember, DO NOT venture outside without protective gear, the rescue teams will arrive in seven days.''')
 wait_for_continue()
 print('DAY 1')
@@ -23,15 +25,9 @@ wait_for_continue()
 print('(You then eat the biscuits and drink half of the water in the bottle)')
 wait_for_continue()
 print(name,':','''It's night time now, perhaps I should go to sleep.''')
-
 wait_for_continue()
 print('(You sleep in the sleeping bag provided in the shelter. This is your day 1 in the shelter.)')
 wait_for_continue()
-
-#print the game title
-
-wait_for_continue()
-
 print('Instructions for gameplay : Survive for 7 days and wait for rescue.\nTo survive, you need to keep the health bar above 0.\nIn a day, you can only scrap for 3 resources including different food, water and medicine. They are randomly scattered across the map.\nSome resources require you to solve a puzzle to obtain while some can be obtained directly.\nReacting to random events upon return.')
 wait_for_continue()
 print('DAY 2')
