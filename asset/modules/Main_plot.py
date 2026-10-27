@@ -26,6 +26,7 @@ wait_for_continue()
 print('(You then eat the biscuits and drink half of the water in the bottle)')
 wait_for_continue()
 print(name,':','It's night time now, perhapsI should go to sleep.''')
+
 wait_for_continue()
 print('You sleep in the sleeing bag provided in the shelter. This is your day 1 in the shelter.')
 wait_for_continue()
