@@ -25,7 +25,7 @@ wait_for_continue()
 print(name,':','''It's night time now, perhaps I should go to sleep.''')
 
 wait_for_continue()
-print('(You sleep in the sleeing bag provided in the shelter. This is your day 1 in the shelter.)')
+print('(You sleep in the sleeping bag provided in the shelter. This is your day 1 in the shelter.)')
 wait_for_continue()
 
 #print the game title
@@ -36,7 +36,7 @@ print('Instructions for gameplay : Survive for 7 days and wait for rescue.\nTo s
 wait_for_continue()
 print('DAY 2')
 wait_for_continue()
-print(name,':','Sleeping in a sleeping bag is really unconfortable. But to survive, I have no choice.')
+print(name,':','Sleeping in a sleeping bag is really uncomfortable. But to survive, I have no choice.')
 wait_for_continue()
 
 #a function to pop out the map for the player to interact
@@ -91,7 +91,7 @@ print('DAY 6')
     wait_for_continue()
     print('''(10 minutes passed, nothing happened, you didn't die because of the radiation.\nThe voice from the the radio was right, this is a lie.\n You know you shouldn't stay here any longer.)''')
     wait_for_continue()
-    print(name,':','''I have to leave, I have to escaoe from this lie.\nI don't know where I should go, I only know that I have to leave this city as soon as possible.''')
+    print(name,':','''I have to leave, I have to escape from this lie.\nI don't know where I should go, I only know that I have to leave this city as soon as possible.''')
     wait_for_continue()
     print('(You packed all the stuff you have in your bag.\nYou left the Hazmat suit in the shelter and started the wandering journey...)')
     input('\n[Click to end the game]\n') 
