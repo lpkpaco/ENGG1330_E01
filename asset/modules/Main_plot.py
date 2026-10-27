@@ -44,7 +44,7 @@ wait_for_continue()
 #a function to call out random events or puzzle
 
 
-input('\n[Click Enter to end day 2]\n') 
+input('\n[Press Enter to end day 2]\n') 
 print('This is your day 2')
 wait_for_continue()
 print('DAY 3')
@@ -53,7 +53,7 @@ print('DAY 3')
 
 #puzzle/events function
 
-input('\n[Click Enter to end day 3]\n')
+input('\n[Press Enter to end day 3]\n')
 print('This is your day 3')
 wait_for_continue()
 print('DAY 4')
@@ -62,7 +62,7 @@ print('DAY 4')
 
 #puzzle/events function
 
-input('\n[Click Enter to end day 4]\n')
+input('\n[Press Enter to end day 4]\n')
 print('This is your day 4')
 wait_for_continue()
 print('DAY 5')
@@ -71,7 +71,7 @@ print('DAY 5')
 
 #puzzle/events function
 
-input('\n[Click Enter to end day 5]\n')
+input('\n[Press Enter to end day 5]\n')
 print('This is your day 5')
 wait_for_continue()
 print('DAY 6')
@@ -83,22 +83,22 @@ print('DAY 6')
 #The below should be under a if function after the puzzle for hidden event is finished and defined
 
 #if radio_fixed:
-    print('''Radio : If anyone is listening, the radiation and the nuclear...nuclear war are fake!\nThere's no such war and crisis.\nThis is a trap, an experiment from the government.\nThe government is actually suffering from a slow-burning genetic crisis on the surface.\nThey used the nuclear panic to trick thousands of genetically compatible civilians into locking themselves in pristine isolators.\nDay 7 isn't an evacuation -- it's the harvest date when 'specimens' who maintained high health or suit integrity are selected for involuntary organ/tissue harvesting or gene-therapy research for the elite.''')
+    print('''Radio : If anyone is listening, the radiation and the nuclear...the nuclear war are fake!\nThere's no such war and crisis.\nThis is a trap, an experiment from the government.\nThe government is actually suffering from a slow-burning genetic crisis on the surface.\nThey used the nuclear panic to trick thousands of genetically compatible civilians into locking themselves in pristine isolators.\nDay 7 isn't an evacuation -- it's the harvest date when 'specimens' who maintained high health or suit integrity are selected for involuntary organ/tissue harvesting or gene-therapy research for the elite.''')
     wait_for_continue()
     print(name,':','''If this is real, there's no way I should wait for the 'rescue team' to come tomorrow.\nI have to find out what's the truth.''')
     wait_for_continue()
-    print('(You walked out of the shelter, taking off the Hazmat suit, exposing yourself to the air without any protective gear.)')
+    print('(You walk out of the shelter, taking off the Hazmat suit, exposing yourself to the air without any protective gear.)')
     wait_for_continue()
     print('''(10 minutes passed, nothing happened, you didn't die because of the radiation.\nThe voice from the radio was right, this is a lie.\n You know you shouldn't stay here any longer.)''')
     wait_for_continue()
     print(name,':','''I have to leave, I have to escape from this lie.\nI don't know where I should go, I only know that I have to leave this city as soon as possible.''')
     wait_for_continue()
-    print('(You packed all the stuff you have in your bag.\nYou left the Hazmat suit in the shelter and started the wandering journey...)')
-    input('\n[Click to end the game]\n') 
+    print('(You pack all the stuff you have in your bag.\nYou leave the Hazmat suit in the shelter and start the wandering journey...)')
+    input('\n[Press Enter to end the game]\n') 
     print('GAME OVER - SURVIVED')
-    print('HIDDEN ENDING : THE LAMB ESCAPES FROM THE SLAUGHTER')
+    print('HIDDEN ENDING : THE LAMB ESCAPES SLAUGHTER')
 #else:    
-    input('\n[Click Enter to end day 6]\n')
+    input('\n[Press Enter to end day 6]\n')
     print('This is your day 6')
     wait_for_continue()
     print('THE SEVENTH DAY')
@@ -111,7 +111,7 @@ print('DAY 6')
     print('''(You are escorted into a covered truck. As the truck drives away.\nYou never see what the world really looks like outside and you don't even know what's waiting for you after getting off this truck...''')
     wait_for_continue()
     print(name,':','''I survived. The suit protected me from the toxic wasteland.\nI don't know what's left of humanity, but I made it through the seven days.''')
-    input('\n[Click to end the game]\n')
+    input('\n[Press Enter to end the game]\n')
     print('GAME OVER - SURVIVED')
     print('ORDINARY ENDING : STANDARD SURVIVAL')
 #print the game title
