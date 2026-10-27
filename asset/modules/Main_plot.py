@@ -1,2 +1,2 @@
 name = input().strip()
-print('
+if 
