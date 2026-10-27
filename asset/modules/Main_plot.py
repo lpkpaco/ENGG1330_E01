@@ -25,7 +25,7 @@ wait_for_continue()
 print(name,':','''It's night time now, perhaps I should go to sleep.''')
 
 wait_for_continue()
-print('You sleep in the sleeing bag provided in the shelter. This is your day 1 in the shelter.')
+print('(You sleep in the sleeing bag provided in the shelter. This is your day 1 in the shelter.)')
 wait_for_continue()
 
 #print the game title
@@ -74,7 +74,7 @@ print('DAY 5')
 input('\n[Click Enter to end day 5]\n')
 print('This is your day 5')
 wait_for_continue()
-Printed ('DAY 6')
+print('DAY 6')
 
 #map function
 #The player shd go back to the shelter after he obtained the final tool in the map for fixing the radio 
