@@ -52,9 +52,21 @@ ENGG1330 Group E01
     - [ ] Write the game with the Curses module for less repetitive output and easier integration flow
 
     #### Known bugs:
-    - [ ] Has anyone ever solved the puzzle (?)
+    - [X] Has anyone ever solved the puzzle (?)
+    - [ ] The game hangs if the initial random shuffle results in an already solved state
 
-- [ ] Puzzle 3: TBD
+- [ ] Puzzle 3: Sokoban puzzle
+    - [X] Basic coding
+
+    #### How to call functions
+    `sokoban_puzzle()`
+
+    Usage: Generates a 5x5 grid-based Sokoban puzzle. Returns True if solved puzzle.
+    - controls: W/A/S/D to move, R to reset, Q to quit.
+
+    #### Known bugs:
+    - [ ] None at the moment (Tested locally, movement and reset logic work).
+
 - [ ] Puzzle 4: TBD
 - [ ] Plot + hidden ending
 - [ ] Round-based mechanism and inventory/status mechanism
