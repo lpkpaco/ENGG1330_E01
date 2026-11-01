@@ -49,7 +49,7 @@ ENGG1330 Group E01
     Usage: Generates a 3x3 sliding puzzle game. Returns True if solved puzzle.
 
     #### Todo:
-    - [ ] Write the game with the Curses module for less repetitive output and easier integration flow
+    - [X] Write the game with the Curses module for less repetitive output and easier integration flow
 
     #### Known bugs:
     - [X] Has anyone ever solved the puzzle (?)

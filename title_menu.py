@@ -3,10 +3,10 @@ import curses, locale
 locale.setlocale(locale.LC_ALL, "")
 def load_main_menu(menuscr):
     curses.start_color()
-    curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
-    curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_WHITE)
-    color_normal = curses.color_pair(1)
-    color_selected = curses.color_pair(2)
+    #curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
+    #curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_WHITE)
+    #color_normal = curses.color_pair(1)
+    #color_selected = curses.color_pair(2)
     menuscr.clear()
     import pyfiglet
     titletbd = "ENGG1330-E01"
