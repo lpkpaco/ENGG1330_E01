@@ -70,6 +70,7 @@ ENGG1330 Group E01
 - [ ] Puzzle 4: Shortwave Radio Tuning
 - [X] Plot + Hidden Ending
 - [ ] - [ ] Round-based mechanism and inventory/status mechanism
+- [ ] Map Function
 - [ ] Save/load game functionality
 - [ ] Game menu
 - [ ] Puzzle-main game integration
