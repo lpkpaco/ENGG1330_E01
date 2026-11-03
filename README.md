@@ -75,3 +75,5 @@ ENGG1330 Group E01
 - [ ] Save/load game functionality
 - [ ] Game menu
 - [ ] Puzzle-main game integration
+- [ ] Shoot video
+- [ ] Edit trailer of the game demo
