@@ -148,11 +148,11 @@ def main(stdscr, hp, hunger, thirst, radiation, loc, items):
             status = "Unknown key."
 
 def generate_item():
-    itemlist = {(0, 29): "Water", (30, 59): "Canned Pineapple", (60, 69): "Dog Food", (70, 74): "Circuit Board", (75, 79): "Battery", (80, 82): "Antenna", (83, 100): None}
+    itemlist = {(0, 29): "Water", (30, 59): "Canned Pineapple", (60, 69): "Dog Food", (70, 74): "Circuit Board", (75, 79): "Battery", (80, 82): "Antenna", (83, 85): "Amplifier", (86, 100): None}
     import secrets
     rand_item_id = secrets.SystemRandom.randint(0, 100)
     for key, value in itemlist:
-        if rand_item_id in range(key[1]+1 - key[0]):
+        if rand_item_id in range(key[0], key[1]+1):
             return value
 
 if __name__ == "__main__":
