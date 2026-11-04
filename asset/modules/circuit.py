@@ -44,7 +44,7 @@ def validate(stdscr, objects, start_y, end_y, renderx, rendery):
         if not (0 <= x <= renderx and 4 <= y <= 4 + rendery):
             return False
 
-def generate_circuit(difficulty, renderx, rendery):
+def generate_circuit(difficulty, renderx, rendery, stdscr=None):
     import curses, secrets, locale
     locale.setlocale(locale.LC_ALL, "")
     def circuit_game(stdscr):
@@ -166,7 +166,9 @@ def generate_circuit(difficulty, renderx, rendery):
                     currentx, currenty = lastx, lasty
                     stdscr.addstr(currenty, currentx, decoded_char, color_selected)
                     stdscr.refresh()
-    curses.wrapper(circuit_game)
+    if stdscr is None:
+        return curses.wrapper(circuit_game)
+    return circuit_game(stdscr)
 
 if __name__ == "__main__":
     import pyfiglet

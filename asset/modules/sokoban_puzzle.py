@@ -81,7 +81,7 @@ def sokoban_puzzle():
         move = input("Move: ").strip().lower()
 
         if move == "q":
-            break
+            return False
         if move == "r":
             boxes = initial_boxes[:]
             player = (0, 5)
@@ -96,7 +96,7 @@ def sokoban_puzzle():
             continue
         if player == (5, 5) and next_cell == (5, 6):
             print("success")
-            break
+            return True
         if player == (1, 5) and next_cell == (0, 5):
             player = next_cell
             continue

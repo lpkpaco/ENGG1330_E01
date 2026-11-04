@@ -24,10 +24,24 @@ def load_main_menu(menuscr):
     loadgame.refresh()
     menuscr.keypad(True)
     while True:
-        key = menuscr.getkey()
-        if key == "1":
-            curses.wrapper(main)
-        elif key == "2":
+        ch = menuscr.getch()
+        if ch in (ord("q"), ord("Q")):
+            return
+        if ch == ord("1"):
+            main(menuscr)
+            menuscr.clear()
+            for i, line in enumerate(title.splitlines()):
+                menuscr.addstr(i, 0, line)
+            menuscr.refresh()
+            newgame = curses.newwin(5, 20, 9, 30)
+            newgame.box()
+            newgame.addstr(2, 4, "1. New Game")
+            newgame.refresh()
+            loadgame = curses.newwin(5, 20, 14, 30)
+            loadgame.box()
+            loadgame.addstr(2, 4, "2. Load Game")
+            loadgame.refresh()
+        elif ch == ord("2"):
             pass
 if __name__ == "__main__":
     curses.wrapper(load_main_menu)
