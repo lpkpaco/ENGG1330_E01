@@ -1,5 +1,5 @@
-from asset.modules.filehandle import readsave, writesave, compile
 import curses, locale
+from game import main
 locale.setlocale(locale.LC_ALL, "")
 def load_main_menu(menuscr):
     curses.start_color()
@@ -26,7 +26,7 @@ def load_main_menu(menuscr):
     while True:
         key = menuscr.getkey()
         if key == "1":
-            pass
+            curses.wrapper(main)
         elif key == "2":
             pass
 if __name__ == "__main__":
