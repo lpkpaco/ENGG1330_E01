@@ -84,6 +84,8 @@ def generate_circuit(difficulty, renderx, rendery, stdscr=None):
         lastx, lasty = 0, start_y
         while True:
             key = stdscr.getkey()
+            if key in ("q", "Q"):
+                return False
             if key == "KEY_UP":
                 if currenty - 1 < 4:
                     stdscr.addstr(0, 0, "Cannot move out of boundary".ljust(40))
