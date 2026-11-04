@@ -71,7 +71,7 @@ ENGG1330 Group E01
 - [X] Plot + Hidden Ending
 - [ ] Inventory mechanism
 - [ ] Status mechanism
-- [ ] Map Function
+- [X] Map Function
 - [ ] Save/load game functionality
 - [ ] Game menu
 - [ ] Puzzle-main game integration
