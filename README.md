@@ -67,9 +67,13 @@ ENGG1330 Group E01
     #### Known bugs:
     - [ ] None at the moment (Tested locally, movement and reset logic work).
 
-- [ ] Puzzle 4: TBD
-- [ ] Plot + hidden ending
-- [ ] Round-based mechanism and inventory/status mechanism
+- [ ] Puzzle 4: Shortwave Radio Tuning
+- [X] Plot + Hidden Ending
+- [ ] Inventory mechanism
+- [ ] Status mechanism
+- [ ] Map Function
 - [ ] Save/load game functionality
 - [ ] Game menu
 - [ ] Puzzle-main game integration
+- [ ] Shoot video
+- [ ] Edit trailer of the game demo
