@@ -90,3 +90,4 @@ if __name__ == "__main__":
     print("This module is for developer test only")
     sleep(1)
     sliding_puzzle()
+    
