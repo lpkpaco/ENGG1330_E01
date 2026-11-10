@@ -1,3 +1,7 @@
+from clues import add_clue
+
+
+
 def sokoban_puzzle():
     import random
 
@@ -162,6 +166,12 @@ def sokoban_puzzle():
             player, boxes = result
             if player == exit_cell:
                 print("SOLVED")
+                clue_name = "Scattered Archives"
+                clue_text = "Member A: Station E-01 uses an actual frequency of 5.01 MHz.\nMember B: The government is jamming radio signals everywhere. How do we make sure people can actually hear our broadcast?\nMember C: No matter how many difficulties we have to overcome, we're READY."
+                add_clue(clue_name, clue_text)
+                print("\nClue collected:\n\033[1m" + clue_name + "\033[0m")
+                print(clue_text)
+                input("\nPress Enter to continue")
                 return True
 
 

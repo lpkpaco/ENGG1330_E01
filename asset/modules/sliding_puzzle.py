@@ -1,3 +1,7 @@
+from clues import add_clue
+
+
+
 def sliding_puzzle(): 
     import random
     number_list = ["00","01","02","03","04","05","06","07","08"]
@@ -80,6 +84,12 @@ def sliding_puzzle():
     print("SOLVED")
     for i in matrix:
         print(f"|{i[0]}|{i[1]}|{i[2]}|")
+    clue_name = "Mysterious Technician's Log"
+    clue_text = "The damaged radio dial reads 12.00 MHz ABOVE the actual frequency."
+    add_clue(clue_name, clue_text)
+    print("\nClue collected:\n" + "\033[1m" + clue_name + "\033[0m")
+    print(clue_text)
+    input("\nPress Enter to continue")
     return True
 
 if __name__ == "__main__":
