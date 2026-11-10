@@ -2,3 +2,4 @@ saves/*
 venv1330/*
 asset/modules/__pycache__/*
 __pycache__/*
+asset/puzzles/__pycache__/*

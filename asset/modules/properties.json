@@ -1,0 +1,22 @@
+{
+    "Water": {
+        "hunger": 0,
+        "thirst": 30,
+        "health": 0
+    },
+    "dDog food": {
+        "hunger": 10,
+        "thirst": 0,
+        "health": 0
+    },
+    "Canned food": {
+        "hunger": 30,
+        "thirst": 5,
+        "health": 0
+    },
+    "Medicine": {
+        "hunger": 0,
+        "thirst": 0,
+        "health": 20
+    }
+}

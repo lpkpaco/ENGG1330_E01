@@ -1,0 +1,94 @@
+Opening broadcast...
+Attention all citizens. This is an emergency broadcast. A nuclear war has broken out. Seek for a designated shelter near you immediately.
+I repeat, seek for a designated shelter near you immediately. Remember, DO NOT venture outside without protective gear, the rescue teams will arrive in seven days.
+
+DAY 1
+(You lunge forward and bolt the heavy iron door of the shelter shut.
+Breathless, you sit against the cold concrete wall,
+watching the radiation indicator light flickering red outside the door window.)
+
+{name}: Seven days... The government broadcast said the rescue teams will arrive in seven days. What I need to do is to survive until then. But the shelter is nearly empty...
+
+(You inspect the corner of the room, finding a yellow Hazmat suit hanging on the wall)
+
+{name}: Well, at least I get this suit, I will be able to venture out to search for food and other necessities this week.
+
+(You then find some biscuits, a bottle of water and a radio on the desk)
+
+{name}: I guess I will have these biscuits as my meal today
+
+(You then eat the biscuits and drink half of the water in the bottle)
+
+{name}: It's night time now, perhaps I should go to sleep.
+
+(You sleep in the sleeping bag provided in the shelter. This is your day 1 in the shelter.)
+
+Instructions for gameplay
+Survive for 7 days and wait for rescue.
+To survive, you need to keep the health bar above 0.
+In a day, you can only scrap for 3 resources including different food, water and medicine. They are randomly scattered across the map.
+Some resources require you to solve a puzzle to obtain while some can be obtained directly.
+Reacting to random events upon return.
+
+
+{name}: Sleeping in a sleeping bag is really uncomfortable. But to survive, I have no choice.
+
+This is your day 2
+
+DAY 3
+This is your day 3
+
+DAY 4
+This is your day 4
+
+DAY 5
+This is your day 5
+
+DAY 6 - hidden ending (if radio_fixed)
+Radio: If anyone is listening, the radiation and the nuclear...the nuclear war are fake!
+There's no such war and crisis.
+This is a trap, an experiment from the government.
+The government is actually suffering from a slow-burning genetic crisis on the surface.
+They used the nuclear panic to trick thousands of genetically compatible civilians into locking themselves in pristine isolators.
+Day 7 isn't an evacuation -- it's the harvest date when 'specimens' who maintained high health or suit integrity are selected for involuntary organ/tissue harvesting or gene-therapy research for the elite.
+
+{name}: If this is real, there's no way I should wait for the 'rescue team' to come tomorrow.
+I have to find out what's the truth.
+
+(You walk out of the shelter, taking off the Hazmat suit, exposing yourself to the air without any protective gear.)
+
+(10 minutes passed, nothing happened, you didn't die because of the radiation.
+The voice from the radio was right, this is a lie.
+ You know you shouldn't stay here any longer.)
+
+{name}: I have to leave, I have to escape from this lie.
+I don't know where I should go, I only know that I have to leave this city as soon as possible.
+
+(You pack all the stuff you have in your bag.
+You leave the Hazmat suit in the shelter and start the wandering journey...)
+
+GAME OVER - SURVIVED
+HIDDEN ENDING : THE LAMB ESCAPES SLAUGHTER
+
+DAY 6-7 - ordinary ending (if not radio_fixed)
+This is your day 6
+
+THE SEVENTH DAY
+{name}: This is the day... Finally, the rescue team is here. I am saved.
+
+(You patiently put on the Hazmat suit and wait inside. The shelter doors are opened by a group of people in full military biohazard gear.)
+
+Rescue Team Leader: Subject located. Vital signs are stable.
+Congratulations, you made it to the seventh day, survivor.
+Please step into the transport unit.
+
+(You are escorted into a covered truck. As the truck drives away.
+You never see what the world really looks like outside and you don't even know what's waiting for you after getting off this truck...
+
+{name}: I survived. The suit protected me from the toxic wasteland.
+I don't know what's left of humanity, but I made it through the seven days.
+
+GAME OVER - SURVIVED
+ORDINARY ENDING : STANDARD SURVIVAL
+
+END
