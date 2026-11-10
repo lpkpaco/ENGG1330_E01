@@ -9,7 +9,7 @@ def load_main_menu(menuscr):
     #color_selected = curses.color_pair(2)
     menuscr.clear()
     import pyfiglet
-    titletbd = "ENGG1330-E01"
+    titletbd = "ENGG1330-E01\nRadiation Doom"
     title = pyfiglet.figlet_format(titletbd, font="big", justify = "center", width = 80)
     for i, line in enumerate(title.splitlines()):
         menuscr.addstr(i, 0, line)
