@@ -387,7 +387,7 @@ def generate_loot():
             return loot_table[i][0]
     return "Event"
 
-def generate_item(loc=None):
+def generate_item():
     item = generate_loot()
     while item == "Event":
         item = generate_loot()
@@ -425,7 +425,7 @@ def dispose_item(items, slot):
     items[slot] = None
     return "Disposed " + item + "."
 
-def loc_generation(scr, loc):
+def loc_generation(scr):
     loot = generate_loot()
     if loot == "Event":
         return encounter(scr)

@@ -89,7 +89,7 @@ def writesave(progress, filename=None):
 def deletesaves():
     count = 0
     folder = _saves_dir()
-    for item in list(folder.iterdir()):
+    for item in folder.iterdir():
         if item.is_file() and item.suffix.lower() == ".json":
             item.unlink()
             count = count + 1

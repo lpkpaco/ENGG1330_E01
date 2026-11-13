@@ -2,16 +2,12 @@ import curses
 from pathlib import Path
 
 
-def _plot_path():
-    here = Path(__file__).resolve().parent
-    return here.parent / "modules" / "plot.txt"
-
-
 def load_hidden_plot(name="You"):
-    path = _plot_path()
+    here = Path(__file__).resolve().parent
+    path = here.parent / "modules" / "plot.txt"
     try:
         raw_lines = path.read_text(encoding="utf-8").splitlines()
-    except OSError:
+    except:
         return [
             ["Radio: If anyone is listening, the radiation and the nuclear war are fake!"],
             [name + ": I have to leave and escape from this lie."],
@@ -53,15 +49,23 @@ def wait_lines(scr, lines, footer="Enter: continue    Q: skip"):
     for line in lines:
         if y >= height - 3:
             break
-        scr.addstr(y, 2, line[: max(0, width - 4)])
-        y += 1
-    scr.addstr(height - 2, 2, footer[: max(0, width - 4)])
+        if width - 4 < 0:
+            text = ""
+        else:
+            text = line[:width - 4]
+        scr.addstr(y, 2, text)
+        y = y + 1
+    if width - 4 < 0:
+        foot = ""
+    else:
+        foot = footer[:width - 4]
+    scr.addstr(height - 2, 2, foot)
     scr.refresh()
     while True:
         key = scr.getkey()
-        if key in ("\n", "\r", "KEY_ENTER", "PADENTER", " "):
+        if key == "\n" or key == "\r" or key == "KEY_ENTER" or key == "PADENTER" or key == " ":
             return "enter"
-        if key in ("q", "Q"):
+        if key == "q" or key == "Q":
             return "q"
 
 
@@ -90,7 +94,7 @@ def play_hidden_plot(scr, name="You"):
             if result == "q":
                 return
             page = page + 4
-    wait_lines(scr, ["Press Enter to return to the menu."], "Enter: continue")
+    wait_lines(scr, ["Press Enter to go back."], "Enter: continue")
 
 
 def battery_bar(battery):
@@ -126,10 +130,9 @@ def radio_puzzle(stdscr=None, name="You", play_plot=False):
         yellow = curses.color_pair(4)
 
         intro = [
-            "The radio has been abandoned underground for a long time.",
-            "The vacuum tubes are severely worn out.",
-            "Try to keep them at a stable temperature so the fragile",
-            "components do not burn out.",
+            "This radio has been left underground for a long time.",
+            "The vacuum tubes are pretty worn out.",
+            "Keep all of them at 85 C. If one hits 100 C it burns out.",
         ]
         if wait_lines(scr, intro) == "q":
             return False
@@ -142,15 +145,21 @@ def radio_puzzle(stdscr=None, name="You", play_plot=False):
 
         while temperatures != [85, 85, 85]:
             scr.erase()
-            scr.addstr(1, 2, "VACUUM TUBE CONTROL SYSTEM", yellow)
+            scr.addstr(1, 2, "VACUUM TUBES", yellow)
             scr.addstr(3, 2, "BATTERY  " + battery_bar(battery), white)
-            for i in range(3):
-                marker = ">" if i == selected else " "
-                color = green if i == selected else white
+            i = 0
+            while i < 3:
+                if i == selected:
+                    marker = ">"
+                    color = green
+                else:
+                    marker = " "
+                    color = white
                 if temperatures[i] >= 95:
                     color = red
                 scr.addstr(5 + i, 2, marker + " Tube " + "ABC"[i] + "  " + temp_bar(temperatures[i]), color)
-            scr.addstr(9, 2, "Target: ALL tubes exactly 85 C. Burnout: 100 C.", white)
+                i = i + 1
+            scr.addstr(9, 2, "Target: all tubes at 85 C. Burnout at 100 C.", white)
             scr.addstr(11, 2, "Heating effects:   A     B     C", white)
             scr.addstr(12, 2, "Tube A:           +5     0    -5", white)
             scr.addstr(13, 2, "Tube B:           -5    +5     0", white)
@@ -158,48 +167,50 @@ def radio_puzzle(stdscr=None, name="You", play_plot=False):
             scr.addstr(16, 2, "W/S or Up/Down: select tube", white)
             scr.addstr(17, 2, "A/D or Left/Right: cool / heat  (-5% battery)", white)
             scr.addstr(18, 2, "Q: quit", white)
-            if status:
+            if status != "":
                 scr.addstr(20, 2, status[:76], red)
             scr.refresh()
             key = scr.getkey()
             status = ""
-            if key in ("q", "Q"):
+            if key == "q" or key == "Q":
                 return False
-            if key in ("w", "W", "KEY_UP"):
+            if key == "w" or key == "W" or key == "KEY_UP":
                 selected = (selected - 1) % 3
-            elif key in ("s", "S", "KEY_DOWN"):
+            elif key == "s" or key == "S" or key == "KEY_DOWN":
                 selected = (selected + 1) % 3
-            elif key in ("a", "A", "d", "D", "KEY_LEFT", "KEY_RIGHT"):
+            elif key == "a" or key == "A" or key == "d" or key == "D" or key == "KEY_LEFT" or key == "KEY_RIGHT":
                 change = -1
-                if key in ("d", "D", "KEY_RIGHT"):
+                if key == "d" or key == "D" or key == "KEY_RIGHT":
                     change = 1
-                next_temperatures = []
-                for i in range(3):
-                    next_temperatures.append(temperatures[i] + effects[selected][i] * change)
-                if min(next_temperatures) < 0:
-                    status = "Control rejected: temperature would fall below 0 C."
+                nxt = []
+                i = 0
+                while i < 3:
+                    nxt.append(temperatures[i] + effects[selected][i] * change)
+                    i = i + 1
+                if min(nxt) < 0:
+                    status = "Too cold, that would go below 0 C."
                     continue
-                temperatures = next_temperatures
-                battery -= 5
+                temperatures = nxt
+                battery = battery - 5
                 if max(temperatures) >= 100:
-                    wait_lines(scr, ["A tube burns out. Tonight's attempt has failed."])
+                    wait_lines(scr, ["One of the tubes burned out. The radio failed."])
                     return False
                 if battery == 0:
                     break
 
         if battery < 10 or temperatures != [85, 85, 85]:
-            wait_lines(scr, ["Not enough battery to keep the radio running. Tonight ends."])
+            wait_lines(scr, ["Battery too low. The radio died."])
             return False
 
         result = wait_lines(scr, [
-            "Vacuum tube control system repaired.",
-            "The radio is now operational.",
+            "The tubes are stable now.",
+            "The radio works.",
         ])
         if play_plot and result != "q":
             play_hidden_plot(scr, name)
         return True
 
-    if stdscr is None:
+    if stdscr == None:
         return curses.wrapper(game)
     return game(stdscr)
 
