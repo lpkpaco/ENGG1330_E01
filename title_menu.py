@@ -6,7 +6,7 @@ locale.setlocale(locale.LC_ALL, "")
 def draw_main_menu(menuscr, title):
     menuscr.clear()
     import pyfiglet
-    titletbd = "ENGG1330-E01"
+    titletbd = "7 DAYS"
     title = pyfiglet.figlet_format(titletbd, font="big", justify = "center", width = 80)
     for i, line in enumerate(title.splitlines()):
         menuscr.addstr(i, 0, line)
