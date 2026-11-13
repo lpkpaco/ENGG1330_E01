@@ -29,7 +29,7 @@ def put(scr, y, x, text, attr=0):
         pass
 
 def enter_ch(ch):
-    if enter_ch(ch):
+    if ch == 10 or ch == 13 or ch == curses.KEY_ENTER:
         return True
     if hasattr(curses, "PADENTER") and ch == curses.PADENTER:
         return True
