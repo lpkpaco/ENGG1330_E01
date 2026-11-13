@@ -3,7 +3,6 @@ def get_char(stdscr, currenty, currentx):
     if currenty < 0 or currenty >= height or currentx < 0 or currentx >= width:
         return " "
     try:
-        stdscr.addstr(2, 0, f"{currentx} {currenty}")
         raw_char = stdscr.instr(currenty, currentx, 4).split(b"\x00", 1)[0]
         decoded = raw_char.decode("utf-8", errors="ignore")
         if decoded:
@@ -49,6 +48,7 @@ def generate_circuit(difficulty, renderx, rendery, stdscr=None):
     locale.setlocale(locale.LC_ALL, "")
     def circuit_game(stdscr):
         curses.start_color()
+        stdscr.keypad(True)
         curses.init_pair(1, curses.COLOR_WHITE, curses.COLOR_BLACK)
         curses.init_pair(2, curses.COLOR_BLACK, curses.COLOR_WHITE)
         curses.init_pair(3, curses.COLOR_RED, curses.COLOR_BLACK)
@@ -67,15 +67,13 @@ def generate_circuit(difficulty, renderx, rendery, stdscr=None):
         blocked_coor = []
         for i in range(0, difficulty):
             while True:
-                y = secrets.SystemRandom().randint(4, 4 + rendery)
-                if y == start_y and y == end_y:
+                y = secrets.SystemRandom().randint(4, 4 + rendery - 1)
+                x = secrets.SystemRandom().randint(0, renderx - 1)
+                if (x, y) == (0, start_y) or (x, y) == (renderx - 1, end_y):
                     continue
-                x = secrets.SystemRandom().randint(1, 1 + renderx)
                 if (x, y) not in blocked_coor:
                     blocked_coor.append((x, y))
                     break
-                else:
-                    continue
         if __name__ == "__main__":
             print(blocked_coor)
             print(len(blocked_coor))
@@ -142,7 +140,7 @@ def generate_circuit(difficulty, renderx, rendery, stdscr=None):
                     currentx += 1
                     stdscr.chgat(currenty, currentx, 1, color_selected)
                     stdscr.refresh()
-            elif key == "\n":
+            elif key in ("\n", "\r", "KEY_ENTER", "PADENTER"):
                 if validate(stdscr, objects, start_y, end_y, renderx, rendery):
                     stdscr.addstr(0, 0, "Success".ljust(40))
                     stdscr.refresh()
@@ -166,7 +164,7 @@ def generate_circuit(difficulty, renderx, rendery, stdscr=None):
                     stdscr.addstr(1, 0, "Blocked")
                     stdscr.addstr(currenty, currentx, "X", color_blocked)
                     currentx, currenty = lastx, lasty
-                    stdscr.addstr(currenty, currentx, decoded_char, color_selected)
+                    stdscr.chgat(currenty, currentx, 1, color_selected)
                     stdscr.refresh()
     if stdscr is None:
         return curses.wrapper(circuit_game)

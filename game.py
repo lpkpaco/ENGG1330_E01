@@ -1,4 +1,4 @@
-import curses
+import curses #holy code ts so tuff
 import json
 import locale
 import os
@@ -8,11 +8,14 @@ locale.setlocale(locale.LC_ALL, "")
 from asset.puzzles.circuit import generate_circuit
 from asset.puzzles.sliding_puzzle_curses import sliding_puzzle
 from asset.puzzles.sokoban_puzzle import sokoban_puzzle
+from asset.puzzles.radio import radio_puzzle
 from asset.modules.readplot import readplot
+from asset.modules.calc import circuit_difficulty
+from asset.modules.filehandle import writesave, loadsave, readsave, unused_save_name
 
 init = False
 DAYS = 7
-ACTIONS = 3
+ACTIONS = 4
 
 prop_file = os.path.join(os.path.dirname(__file__), "asset", "modules", "properties.json")
 f = open(prop_file, "r")
@@ -24,6 +27,16 @@ def put(scr, y, x, text, attr=0):
         scr.addstr(y, x, text, attr)
     except curses.error:
         pass
+
+def enter_ch(ch):
+    if enter_ch(ch):
+        return True
+    if hasattr(curses, "PADENTER") and ch == curses.PADENTER:
+        return True
+    return False
+
+def enter_key(key):
+    return key == "\n" or key == "\r" or key == "KEY_ENTER" or key == "PADENTER"
 
 def wrap_plot_line(text, width):
     words = text.split()
@@ -63,6 +76,52 @@ def load_intro_beats(name):
         return [["(No opening plot found.)"]]
     return beats
 
+
+def load_ending_beats(name, hidden):
+    try:
+        raw_lines = readplot()
+    except OSError:
+        if hidden:
+            return [["You turned on the radio and escaped."]]
+        return [["You survived 7 days."]]
+    beats = []
+    current = []
+    started = False
+    if hidden:
+        start = "DAY 6 - hidden ending"
+        stop = "DAY 6-7"
+    else:
+        start = "THE SEVENTH DAY"
+        stop = "END"
+    for line in raw_lines:
+        stripped = line.strip()
+        if started == False:
+            if stripped.startswith(start):
+                started = True
+                if hidden:
+                    continue
+            else:
+                continue
+        if hidden:
+            if stripped.startswith(stop):
+                break
+        else:
+            if stripped == stop:
+                break
+        if stripped == "":
+            if current != []:
+                beats.append(current)
+                current = []
+            continue
+        current.append(line.replace("{name}", name))
+    if current != []:
+        beats.append(current)
+    if beats == []:
+        if hidden:
+            return [["You turned on the radio and escaped."]]
+        return [["You survived 7 days."]]
+    return beats
+
 def init_gameplot(scr, name=None, hp=100, hunger=100, thirst=100, radiation=0,
                   loc=1, items=None, location_items=None):
     global init
@@ -84,7 +143,7 @@ def init_gameplot(scr, name=None, hp=100, hunger=100, thirst=100, radiation=0,
     names = {1: "Base", 2: "Trash can", 3: "Warehouse", 4: "Store"}
     scr.keypad(True)
 
-    def draw_frame(dialogue_lines, footer="Enter: continue    Q: skip intro"):
+    def draw_frame(dialogue_lines, footer="Enter: continue    Q: skip intro"): #blud this drawing code killing me imma killmyself
         h, w = scr.getmaxyx()
         scr.erase()
         if h < 24 or w < 80:
@@ -117,10 +176,10 @@ def init_gameplot(scr, name=None, hp=100, hunger=100, thirst=100, radiation=0,
         put(scr, 6, 64, "4 Store", white)
         put(scr, 8, 64, "5-8 Use/Toss", white)
         put(scr, 13, 64, "9 Dispose", white)
-        put(scr, 9, 64, "5 [" + (items[0] if items[0] else " ") + "]", white)
-        put(scr, 10, 64, "6 [" + (items[1] if items[1] else " ") + "]", white)
-        put(scr, 11, 64, "7 [" + (items[2] if items[2] else " ") + "]", white)
-        put(scr, 12, 64, "8 [" + (items[3] if items[3] else " ") + "]", white)
+        put(scr, 9, 63, "5 [" + (items[0] if items[0] else " ") + "]", white)
+        put(scr, 10, 63, "6 [" + (items[1] if items[1] else " ") + "]", white)
+        put(scr, 11, 63, "7 [" + (items[2] if items[2] else " ") + "]", white)
+        put(scr, 12, 63, "8 [" + (items[3] if items[3] else " ") + "]", white)
         box(scr, 17, 0, 7, 80, white)
         put(scr, 17, 2, " DIALOGUE / INPUT ", white)
         for i in range(len(dialogue_lines)):
@@ -136,7 +195,7 @@ def init_gameplot(scr, name=None, hp=100, hunger=100, thirst=100, radiation=0,
             ch = scr.getch()
             if ch == ord("q") or ch == ord("Q"):
                 return "q"
-            if ch == 10 or ch == 13 or ch == curses.KEY_ENTER or ch == ord(" "):
+            if enter_ch(ch) or ch == ord(" "):
                 return "enter"
 
     if name == None or name == "":
@@ -151,7 +210,7 @@ def init_gameplot(scr, name=None, hp=100, hunger=100, thirst=100, radiation=0,
                     return "You"
                 continue
             ch = scr.getch()
-            if ch == 10 or ch == 13 or ch == curses.KEY_ENTER:
+            if enter_ch(ch):
                 name = buf.strip()
                 if name == "":
                     name = "You"
@@ -237,7 +296,7 @@ def pick_item(scr, item):
     scr.refresh()
     while True:
         key = scr.getkey()
-        if key == "\n" or key == "\r" or key == "KEY_ENTER":
+        if enter_key(key):
             return "You picked up the " + str(item), item
         if key == " ":
             return "You skipped", None
@@ -266,12 +325,13 @@ def restore_curses(scr):
         pass
     curses.flushinp()
 
-def run_game(scr, puzzle):
+def run_game(scr, puzzle, hp=100, radiation=0):
     result = False
     if puzzle == "sliding_puzzle":
         result = sliding_puzzle(scr)
     elif puzzle == "circuit_puzzle":
-        result = generate_circuit(5, 20, 10, scr)
+        blocked, width, height = circuit_difficulty(hp, radiation)
+        result = generate_circuit(blocked, width, height, scr)
     elif puzzle == "sokoban_puzzle":
         result = sokoban_puzzle(scr)
     else:
@@ -285,7 +345,7 @@ LOCATION_PUZZLES = {
     4: "sokoban_puzzle"
 }
 
-def encounter(scr):
+def encounter(scr, hp=100, radiation=0):
     scenario = random.choice(["scenario A", "scenario B", "scenario C"])
     puzzles = ["sliding_puzzle", "sokoban_puzzle", "circuit_puzzle"]
     put(scr, 12, 0, "You encountered " + scenario + "!")
@@ -293,35 +353,37 @@ def encounter(scr):
     scr.refresh()
     while True:
         key = scr.getkey()
-        if key == "\n" or key == "\r" or key == "KEY_ENTER":
+        if enter_key(key):
             puzzle = random.choice(puzzles)
             put(scr, 12, 0, "Solve " + puzzle + " to pass.")
             scr.refresh()
-            if run_game(scr, puzzle):
+            if run_game(scr, puzzle, hp, radiation):
                 return "You solved the puzzle", "Circuit Board"
             return "Puzzle failed", None
         if key == " ":
             return "You skipped", None
 
 loot_table = [
-    ["Circuit Board", 5],
-    ["Battery", 5],
-    ["Antenna", 5],
-    ["Amplifier", 5],
-    ["Tuner", 5],
-    ["Water", 30],
+    ["Circuit Board", 7.5],
+    ["Battery", 7.5],
+    ["Antenna", 7.5],
+    ["Amplifier", 7.5],
+    ["Water", 25],
     ["Canned Food", 10],
     ["Dog Food", 20],
     ["Medicine", 10],
     ["Event", 5]
 ]
 
+
+radio_parts = ["Circuit Board", "Battery", "Antenna", "Amplifier"]
+
 def generate_loot():
-    roll = random.randint(1, 100)
+    roll = random.random() * 100
     total = 0
     for i in range(len(loot_table)):
         total = total + loot_table[i][1]
-        if roll <= total:
+        if roll < total:
             return loot_table[i][0]
     return "Event"
 
@@ -338,12 +400,12 @@ def regen_map():
     return new_items
 
 def hp_penalty(n):
-    if n < 40:
-        return 50
-    elif n < 60:
-        return 30
-    elif n < 85:
+    if n < 25:
+        return 35
+    elif n < 50:
         return 20
+    elif n < 75:
+        return 10
     else:
         return 0
 
@@ -369,6 +431,39 @@ def loc_generation(scr, loc):
         return encounter(scr)
     return pick_item(scr, loot)
 
+def ask_save_name(scr, default=""):
+    buf = default
+    if buf.lower().endswith(".json"):
+        buf = buf[:-5]
+    curses.curs_set(1)
+    white = curses.color_pair(5)
+    cyan = curses.color_pair(6)
+    while True:
+        box(scr, 17, 0, 7, 80, white)
+        put(scr, 17, 2, " SAVE GAME ", white)
+        put(scr, 18, 2, " " * 76, white)
+        put(scr, 19, 2, "Name this save: " + buf, white)
+        put(scr, 20, 2, " " * 76, white)
+        put(scr, 21, 2, " " * 76, white)
+        put(scr, 22, 2, "Enter: save    Q: cancel", cyan)
+        scr.refresh()
+        ch = scr.getch()
+        if ch == ord("q") or ch == ord("Q"):
+            curses.curs_set(0)
+            return None
+        if enter_ch(ch):
+            break
+        if ch == curses.KEY_BACKSPACE or ch == 127 or ch == 8:
+            buf = buf[:-1]
+        elif ch >= 32 and ch <= 126 and len(buf) < 40:
+            buf = buf + chr(ch)
+    curses.curs_set(0)
+    name = buf.strip()
+    if name == "":
+        return default
+    return name
+
+
 def wait_dialogue(scr, lines, footer="Enter: continue"):
     white = curses.color_pair(5)
     cyan = curses.color_pair(6)
@@ -384,12 +479,30 @@ def wait_dialogue(scr, lines, footer="Enter: continue"):
     scr.refresh()
     while True:
         ch = scr.getch()
-        if ch == 10 or ch == 13 or ch == curses.KEY_ENTER or ch == ord(" "):
+        if enter_ch(ch) or ch == ord(" "):
             return "enter"
         if ch == ord("q") or ch == ord("Q"):
             return "q"
 
-def main(stdscr, hp=100, hunger=100, thirst=100, radiation=0, loc=1, items=None):
+
+def play_ending(scr, name, hidden):
+    beats = load_ending_beats(name, hidden)
+    for beat in beats:
+        wrapped = []
+        for line in beat:
+            wrapped = wrapped + wrap_plot_line(line, 76)
+        if wrapped == []:
+            continue
+        page = 0
+        while page < len(wrapped):
+            chunk = wrapped[page:page + 4]
+            result = wait_dialogue(scr, chunk, "Enter: continue    Q: skip")
+            if result == "q":
+                return
+            page = page + 4
+    wait_dialogue(scr, ["Press Enter to return to the menu."])
+
+def main(stdscr, hp=100, hunger=100, thirst=100, radiation=0, loc=1, items=None, save=None):
     if items == None:
         items = [None, None, None, None]
     visited = set()
@@ -397,8 +510,45 @@ def main(stdscr, hp=100, hunger=100, thirst=100, radiation=0, loc=1, items=None)
     solved = set()
     location_items = regen_map()
     dispose_mode = False
+    radio_fixed = False
+    radio_built = False
     day = 1
     actions_left = ACTIONS
+    player_name = None
+    skip_intro = False
+    if save != None:
+        hp = save.get("hp", hp)
+        hunger = save.get("hunger", hunger)
+        thirst = save.get("thirst", thirst)
+        radiation = save.get("radiation", radiation)
+        loc = save.get("loc", loc)
+        if "items" in save and save["items"] != None:
+            items = save["items"][:]
+        if items == None:
+            items = [None, None, None, None]
+        while len(items) < 4:
+            items.append(None)
+        items = items[:4]
+        day = save.get("day", 1)
+        actions_left = save.get("actions_left", ACTIONS)
+        radio_fixed = save.get("radio_fixed", False)
+        radio_built = save.get("radio_built", False)
+        player_name = save.get("player_name", "You")
+        if player_name == None or player_name == "":
+            player_name = "You"
+        if "location_items" in save and save["location_items"] != None:
+            location_items = {}
+            for k in save["location_items"]:
+                location_items[int(k)] = save["location_items"][k]
+        if "visited" in save and save["visited"] != None:
+            visited = set()
+            for v in save["visited"]:
+                visited.add(int(v))
+        if "solved" in save and save["solved"] != None:
+            solved = set()
+            for v in save["solved"]:
+                solved.add(int(v))
+        skip_intro = True
     curses.curs_set(0)
     curses.start_color()
     curses.use_default_colors()
@@ -414,17 +564,20 @@ def main(stdscr, hp=100, hunger=100, thirst=100, radiation=0, loc=1, items=None)
     yellow = curses.color_pair(4)
     white = curses.color_pair(5)
     cyan = curses.color_pair(6)
-    status = "DAY 1. " + str(ACTIONS) + " actions left."
+    status = "DAY " + str(day) + ". " + str(actions_left) + " actions left."
     stdscr.keypad(True)
     global init
-    init = False
-    player_name = init_gameplot(stdscr, hp=hp, hunger=hunger, thirst=thirst,
-                                radiation=radiation, loc=loc, items=items,
-                                location_items=location_items)
-    status = "DAY 1. " + str(ACTIONS) + " actions left."
+    if skip_intro:
+        init = True
+    else:
+        init = False
+        player_name = init_gameplot(stdscr, hp=hp, hunger=hunger, thirst=thirst,
+                                    radiation=radiation, loc=loc, items=items,
+                                    location_items=location_items)
+        status = "DAY " + str(day) + ". " + str(actions_left) + " actions left."
 
     def advance_day():
-        nonlocal day, actions_left, location_items, visited
+        nonlocal day, actions_left, location_items, visited, solved
         nonlocal dispose_mode, status, hp, hunger, thirst
         dispose_mode = False
         lost = hp_penalty(hunger) + hp_penalty(thirst)
@@ -445,10 +598,19 @@ def main(stdscr, hp=100, hunger=100, thirst=100, radiation=0, loc=1, items=None)
             msg.append("Press Enter to return to the menu.")
             wait_dialogue(stdscr, msg)
             return False
+        if radio_fixed and day >= 6:
+            msg.append("Press Enter to continue.")
+            result = wait_dialogue(stdscr, msg)
+            if result == "q":
+                return False
+            play_ending(stdscr, player_name, True)
+            return False
         if day >= DAYS:
-            msg.append("You survived 7 days.")
-            msg.append("Press Enter to return to the menu.")
-            wait_dialogue(stdscr, msg)
+            msg.append("Press Enter to continue.")
+            result = wait_dialogue(stdscr, msg)
+            if result == "q":
+                return False
+            play_ending(stdscr, player_name, False)
             return False
         hunger = cap(hunger - 20)
         thirst = cap(thirst - 20)
@@ -457,6 +619,14 @@ def main(stdscr, hp=100, hunger=100, thirst=100, radiation=0, loc=1, items=None)
         actions_left = ACTIONS
         location_items = regen_map()
         visited = set()
+        solved = set()
+        if radio_fixed and day >= 6:
+            msg.append("Press Enter to continue.")
+            result = wait_dialogue(stdscr, msg)
+            if result == "q":
+                return False
+            play_ending(stdscr, player_name, True)
+            return False
         msg.append("Press Enter to begin DAY " + str(day) + ".")
         result = wait_dialogue(stdscr, msg)
         if result == "q":
@@ -476,24 +646,34 @@ def main(stdscr, hp=100, hunger=100, thirst=100, radiation=0, loc=1, items=None)
         return True
 
     def try_pickup():
+        nonlocal radiation
         loot = location_items.get(loc)
         if loot == None or loot == "":
             visited.add(loc)
             return True, "Nothing left here."
         puzzle = LOCATION_PUZZLES.get(loc)
+        gained_rad = False
         if puzzle != None and loc not in solved:
-            if not run_game(stdscr, puzzle):
+            if not run_game(stdscr, puzzle, hp, radiation):
                 return True, "Puzzle failed. Come back to try again."
             solved.add(loc)
+            radiation = cap(radiation + 7)
+            gained_rad = True
+            if radiation >= 100:
+                wait_dialogue(stdscr, ["Your radiation reached 100.", "Press Enter to return to the menu."])
+                return False, None
+        rad_note = ""
+        if gained_rad:
+            rad_note = " Radiation +7."
         if loot == "Event":
-            message, reward = encounter(stdscr)
+            message, reward = encounter(stdscr, hp, radiation)
             restore_curses(stdscr)
             if message == "You skipped":
-                return True, "You skipped the event."
+                return True, "You skipped the event." + rad_note
             if reward == None:
                 visited.add(loc)
                 location_items[loc] = None
-                return True, message
+                return True, message + rad_note
             loot = reward
         empty_slot = None
         for i in range(len(items)):
@@ -502,11 +682,11 @@ def main(stdscr, hp=100, hunger=100, thirst=100, radiation=0, loc=1, items=None)
                 break
         if empty_slot == None:
             location_items[loc] = loot
-            return True, "Found " + loot + ", but inventory is full."
+            return True, "Found " + loot + ", but inventory is full." + rad_note
         visited.add(loc)
         items[empty_slot] = loot
         location_items[loc] = None
-        ok = spend_action("Found " + loot + ". Added to slot " + str(empty_slot + 5) + ".")
+        ok = spend_action("Found " + loot + ". Added to slot " + str(empty_slot + 5) + "." + rad_note)
         return ok, None
 
     while True:
@@ -555,7 +735,7 @@ def main(stdscr, hp=100, hunger=100, thirst=100, radiation=0, loc=1, items=None)
         else:
             put(stdscr, 12, 34, "Press 1-4 to move.", white)
             put(stdscr, 13, 34, "5-8 use, 9 dispose.", white)
-            put(stdscr, 14, 34, "0 end day / skip.", white)
+            put(stdscr, 14, 34, "0 end day, C craft, S save.", white)
         names = {1: "Base", 2: "Trash can", 3: "Warehouse", 4: "Store"}
         put(stdscr, 15, 34, "Here: " + names.get(loc, "?"), cyan)
         box(stdscr, 0, 62, 17, 18, white)
@@ -568,14 +748,15 @@ def main(stdscr, hp=100, hunger=100, thirst=100, radiation=0, loc=1, items=None)
         put(stdscr, 8, 64, "5-8 Use/Toss", white)
         put(stdscr, 13, 64, "9 Dispose", white)
         put(stdscr, 14, 64, "0 End day", white)
-        put(stdscr, 9, 64, "5 [" + (items[0] if items[0] else " ") + "]", white)
-        put(stdscr, 10, 64, "6 [" + (items[1] if items[1] else " ") + "]", white)
-        put(stdscr, 11, 64, "7 [" + (items[2] if items[2] else " ") + "]", white)
-        put(stdscr, 12, 64, "8 [" + (items[3] if items[3] else " ") + "]", white)
+        put(stdscr, 15, 64, "C Craft", white)
+        put(stdscr, 9, 63, "5 [" + (items[0] if items[0] else " ") + "]", white)
+        put(stdscr, 10, 63, "6 [" + (items[1] if items[1] else " ") + "]", white)
+        put(stdscr, 11, 63, "7 [" + (items[2] if items[2] else " ") + "]", white)
+        put(stdscr, 12, 63, "8 [" + (items[3] if items[3] else " ") + "]", white)
         box(stdscr, 17, 0, 7, 80, white)
         put(stdscr, 17, 2, " DIALOGUE / INPUT ", white)
         put(stdscr, 19, 2, ("> " + status)[:76], white)
-        put(stdscr, 21, 2, "0 end day    Q quit", white)
+        put(stdscr, 21, 2, "0 end day    C craft    S save    Q quit", white)
 
         stdscr.refresh()
         ch = stdscr.getch()
@@ -610,10 +791,75 @@ def main(stdscr, hp=100, hunger=100, thirst=100, radiation=0, loc=1, items=None)
                 return
             continue
 
+        if key == "s" or key == "S":
+            default_name = unused_save_name()
+            name = ask_save_name(stdscr, default_name)
+            if name == None:
+                status = "Save cancelled."
+                continue
+            progress = {
+                "player_name": player_name,
+                "day": day,
+                "actions_left": actions_left,
+                "hp": hp,
+                "hunger": hunger,
+                "thirst": thirst,
+                "radiation": radiation,
+                "loc": loc,
+                "items": items,
+                "location_items": {},
+                "visited": list(visited),
+                "solved": list(solved),
+                "radio_fixed": radio_fixed,
+                "radio_built": radio_built
+            }
+            for k in location_items:
+                progress["location_items"][str(k)] = location_items[k]
+            saved = writesave(progress, name)
+            if saved:
+                status = "Saved as " + saved + "."
+            else:
+                status = "Save failed."
+            continue
+
         if key == "9":
             dispose_mode = True
             status = "Dispose mode: press 5-8 to toss."
             continue
+
+        if key == "c" or key == "C":
+            if radio_fixed:
+                if day >= 6:
+                    play_ending(stdscr, player_name, True)
+                    return
+                status = "The radio is already working."
+            else:
+                if radio_built == False:
+                    missing = []
+                    for part in radio_parts:
+                        if part not in items:
+                            missing.append(part)
+                    if missing != []:
+                        status = "Missing: " + ", ".join(missing) + "."
+                        continue
+                    for part in radio_parts:
+                        for i in range(len(items)):
+                            if items[i] == part:
+                                items[i] = None
+                                break
+                    radio_built = True
+                ok = radio_puzzle(stdscr, name=player_name, play_plot=False)
+                restore_curses(stdscr)
+                if ok:
+                    radio_fixed = True
+                    if day >= 6:
+                        play_ending(stdscr, player_name, True)
+                        return
+                    status = "The radio is working. It may have more to say later."
+                else:
+                    status = "The tubes failed. Press C to try again."
+            continue
+
 
         if key == "1":
             new_loc = 1
@@ -662,6 +908,10 @@ def main(stdscr, hp=100, hunger=100, thirst=100, radiation=0, loc=1, items=None)
                 hp = cap(hp + effect["health"])
                 hunger = cap(hunger + effect["hunger"])
                 thirst = cap(thirst + effect["thirst"])
+                rad = 0
+                if "radiation" in effect:
+                    rad = effect["radiation"]
+                radiation = cap(radiation + rad)
                 msg = "Used " + used + "."
                 if effect["hunger"] != 0:
                     msg = msg + " Hunger +" + str(effect["hunger"]) + "."
@@ -669,6 +919,10 @@ def main(stdscr, hp=100, hunger=100, thirst=100, radiation=0, loc=1, items=None)
                     msg = msg + " Thirst +" + str(effect["thirst"]) + "."
                 if effect["health"] != 0:
                     msg = msg + " HP +" + str(effect["health"]) + "."
+                if rad > 0:
+                    msg = msg + " Radiation +" + str(rad) + "."
+                elif rad < 0:
+                    msg = msg + " Radiation " + str(rad) + "."
                 if not spend_action(msg):
                     return
         else:

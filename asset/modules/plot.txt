@@ -26,7 +26,7 @@ watching the radiation indicator light flickering red outside the door window.)
 Instructions for gameplay
 Survive for 7 days and wait for rescue.
 To survive, you need to keep the health bar above 0.
-In a day, you can only scrap for 3 resources including different food, water and medicine. They are randomly scattered across the map.
+In a day, you can only scrap for 4 resources including different food, water and medicine. They are randomly scattered across the map.
 Some resources require you to solve a puzzle to obtain while some can be obtained directly.
 Reacting to random events upon return.
 
@@ -82,8 +82,8 @@ Rescue Team Leader: Subject located. Vital signs are stable.
 Congratulations, you made it to the seventh day, survivor.
 Please step into the transport unit.
 
-(You are escorted into a covered truck. As the truck drives away.
-You never see what the world really looks like outside and you don't even know what's waiting for you after getting off this truck...
+(You are escorted into a covered truck. As the truck drives away.)
+(You never see what the world really looks like outside and you don't even know what's waiting for you after getting off this truck...)
 
 {name}: I survived. The suit protected me from the toxic wasteland.
 I don't know what's left of humanity, but I made it through the seven days.
