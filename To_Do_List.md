@@ -68,12 +68,39 @@ ENGG1330 Group E01
     - [ ] None at the moment (Tested locally, movement and reset logic work).
 
 - [ ] Puzzle 4: Shortwave Radio Tuning
+    - [X] Basic coding
+
+    #### How to call functions
+    `final_puzzle()`
+
+    Usage: There are 3 stages in this puzzle.
+    Stage 1:
+    - Objective: Adjust all three vacuum tubes at exactly 85°C.
+    - Core Mechanics:
+        - Heating or cooling one tube links and affects the temperatures of the others.
+        - Prevent any tube from reaching or exceeding 100°C.
+        - Each temperature adjustment operation consumes 5% of the battery.
+    - Controls: W/S: select tubes, A/D: Decrease/Increase the temperature, Q: quit.
+    Stage 2:
+    - Objective: Lock onto the correct signal frequency at 17.01 MHz using notebook clues.
+    - Core Mechanics:
+        - Moving the dial is free, but receiving signal consumes 10% of the battery.
+    - Controls: W/S: switch tuning step precision, A/D: lower/raise frequency, E: receive signal, N: notes, Q: quit.
+    Stage 3:
+    - Objective: Input the reply codeword "READY".
+    - Core Mechanics:
+        - Each reply attempt consumes 10% of the battery until the correct codeword is entered.
+    - Controls: Option selection (A/B) or text input ("READY"), N: notes, Q: quit.
+
+    #### Known bugs:
+    - [ ] Not sure if notes collected from other puzzles can be checked in the completed game.
+
 - [X] Plot + Hidden Ending
 - [X] Inventory mechanism
 - [ ] Status mechanism
 - [X] Map Function
 - [ ] Save/load game functionality
-- [ ] Game menu
+- [X] Game menu
 - [ ] Puzzle-main game integration
 - [ ] Shoot video
 - [ ] Edit trailer of the game demo
