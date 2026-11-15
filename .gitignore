@@ -3,3 +3,4 @@ venv1330/*
 asset/modules/__pycache__/*
 __pycache__/*
 asset/puzzles/__pycache__/*
+.offline-markdown-preview/*
