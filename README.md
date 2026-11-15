@@ -1,13 +1,26 @@
 # 7 Days
 
-ENGG1330 Group Project (2026–27), Group E01
+ENGG1330 Group Project, Group E01
 
 In 7 Days, you play as someone who just locked themselves in a shelter after a nuclear war broadcast. The government says rescue comes in seven days, so you have to stay alive until then. Food, water, medicine and radio parts are spread around four places on the map, and some of them are locked behind puzzles.
 
-If you just survive until day 7, a “rescue” team shows up and takes you away. That’s the normal ending. If you find some special items and use them properly, you can unlock the hidden ending.
+If you just survive until day 7, a “rescue” team shows up and takes you away. If you find some special items and use them properly, you can unlock the hidden ending.
+
+## Name
+
+Liu Peikun
+
+Li Zi Chen
+
+Leung Ka Lun Kimi
+
+Wang Yung Yung  (Applied for leave of absence and quitted in the later stage of the project)
 
 ## Development log
 Check https://github.com/lpkpaco/ENGG1330_E01 for commit records, detailed contributions, branches and pull requests. SonarQube Cloud is used for checking potential issues and quality gate check but **no generative AI features provided by them are used because we dont have the money to afford the paid tiers and services.**
+
+### Brief development log
+<img src="asset/readme/devlog.png">
 
 ## Game purpose and rules
 
@@ -56,16 +69,6 @@ Puzzle controls:
 - Sliding puzzle (Warehouse): type `1`–`8` to slide that tile into the empty space, Q to quit. The board is shuffled so it should be solvable and not already finished.
 
 - Sokoban (Store): WASD or arrow keys to move, R to restart, Q to quit. The map is generated so it should be solvable. If that fails, it falls back to a fixed layout.
-
-## Name
-
-Liu Peikun
-
-Li Zi Chen
-
-Leung Ka Lun Kimi
-
-Wang Yung Yung  (Applied for leave of absence and quitted in the later stage of the project)
 
 ## Container version
 
