@@ -6,6 +6,11 @@ In 7 Days, you play as someone who just locked themselves in a shelter after a n
 
 If you just survive until day 7, a “rescue” team shows up and takes you away. If you find some special items and use them properly, you can unlock the hidden ending.
 
+[![Quality gate status](https://sonarcloud.io/api/project_badges/measure?project=lpkpaco_ENGG1330_E01&metric=alert_status&token=35823b1bfaafea8ea54853f7a5a43787bfafd69f)](https://sonarcloud.io/summary/new_code?id=lpkpaco_ENGG1330_E01)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=lpkpaco_ENGG1330_E01&metric=reliability_rating&token=35823b1bfaafea8ea54853f7a5a43787bfafd69f)](https://sonarcloud.io/summary/new_code?id=lpkpaco_ENGG1330_E01)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=lpkpaco_ENGG1330_E01&metric=sqale_rating&token=35823b1bfaafea8ea54853f7a5a43787bfafd69f)](https://sonarcloud.io/summary/new_code?id=lpkpaco_ENGG1330_E01)
+[![Security issues](https://sonarcloud.io/api/project_badges/measure?project=lpkpaco_ENGG1330_E01&metric=software_quality_security_issues&token=35823b1bfaafea8ea54853f7a5a43787bfafd69f)](https://sonarcloud.io/summary/new_code?id=lpkpaco_ENGG1330_E01)
+
 ## Name
 
 Liu Peikun
@@ -30,6 +35,8 @@ The game is made for an 80x24 terminal. If your window is smaller than that, it 
 
 On the title menu, press `1` for a new game or `2` to load a save. A new game asks for your name and then plays a short intro. Enter or Space goes to the next line, and Q skips the intro (it also skips later dialogue). On the load screen, press `1`–`9` to open a save, D to delete all saves (it asks you to confirm first), or Q to go back.
 
+<img src="asset/readme/title.png">
+
 Each day you get 4 actions. Keys `1`–`4` move you between Base, the Trash can, the Warehouse and the Store. You can search the last three once per day:
 
 - Trash can: Circuit puzzle
@@ -37,6 +44,8 @@ Each day you get 4 actions. Keys `1`–`4` move you between Base, the Trash can,
 - Store: Sokoban
 
 If you solve the puzzle at that place, you get +7 Radiation. If Radiation hits 100, you die. If you fail, you can come back and try again, and the item is still there. After you solve it (or if there isn’t a puzzle), the item occupies one out of your 4 inventory slots. If your bag is full, the item stays on the map.
+
+<img src="asset/readme/hud.png">
 
 Items you can find: Water, Dog Food, Canned Food, Medicine, and the four radio parts (Circuit Board, Battery, Antenna, Amplifier). Press `5`–`8` to use whatever is in that slot. The effects are in `asset/modules/properties.json`:
 
@@ -66,11 +75,36 @@ Puzzle controls:
 
 - Circuit (Trash can): arrow keys to move, Space to change a tile or check if it’s blocked, Enter to see if the path connects, Q to quit. If your Health is low or Radiation is high, the grid gets bigger and there are more blocked tiles.
 
+<img src="asset/readme/circuit.gif">
+
 - Sliding puzzle (Warehouse): type `1`–`8` to slide that tile into the empty space, Q to quit. The board is shuffled so it should be solvable and not already finished.
+
+<img src="asset/readme/sliding.gif">
 
 - Sokoban: WASD or arrow keys to move, R to restart, Q to quit. Push the boxes and find a valid and unblocked path to the exit to solve the puzzle.
 
+<img src="asset/readme/sokoban.gif">
+
 - Radio: after you craft it with C, W/S or up/down to pick a tube, A/D or left/right to cool or heat it, Q to quit. You have to get all three tubes to 85 C. If one hits 100 it burns out, and each move uses 5% battery, so if the battery runs out you fail. You can press C again to retry.
+
+<img src="asset/readme/radio.gif">
+
+### Endings
+
+If you keep your Health above 0, the game can end in two ways.
+
+If you never fix the radio, day 7 ends with the ordinary ending: the “rescue” team from the broadcast shows up and takes you away. You survived the seven days, but you never find out what the world outside actually looks like.
+
+<img src="asset/readme/ending_ordinary.png">
+
+<details>
+<summary>Hidden ending (spoiler)</summary>
+
+If you gather all four radio parts, craft the radio with C, and get the tubes stable, the hidden ending can trigger from day 6 onwards (press C again, or just end the day). The radio tells you the nuclear war was a lie and day 7 is not a rescue, so you walk out of the shelter instead of waiting. The title is “HIDDEN ENDING : THE LAMB ESCAPES SLAUGHTER.”
+
+<img src="asset/readme/ending_hidden.png">
+
+</details>
 
 ## Container version
 
