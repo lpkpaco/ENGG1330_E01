@@ -68,13 +68,21 @@ Puzzle controls:
 
 - Sliding puzzle (Warehouse): type `1`–`8` to slide that tile into the empty space, Q to quit. The board is shuffled so it should be solvable and not already finished.
 
-- Sokoban (Store): WASD or arrow keys to move, R to restart, Q to quit. The map is generated so it should be solvable. If that fails, it falls back to a fixed layout.
+- Sokoban: WASD or arrow keys to move, R to restart, Q to quit. Push the boxes and find a valid and unblocked path to the exit to solve the puzzle.
+
+- Radio: after you craft it with C, W/S or up/down to pick a tube, A/D or left/right to cool or heat it, Q to quit. You have to get all three tubes to 85 C. If one hits 100 it burns out, and each move uses 5% battery, so if the battery runs out you fail. You can press C again to retry.
 
 ## Container version
 
 We used the course Docker environment **engg1330-project:2026-v03** (`COURSE_ENVIRONMENT_VERSION=2026-v03`). The game only uses the standard library and the packages that already come with the container like curses and pyfiglet.
 
 ## Run command
+
+In the directory containing compose.yaml, run:
+`docker compose build`
+`docker compose run --rm game`
+
+The game should start automatically.
 
 ## Tests and known limitations
 
@@ -93,9 +101,9 @@ Known issues / limitations:
 
 Workload distribution:
 
-- **Liu Peikun (GitHub: lpkpaco):** main game loop, inventory and status, title menu, save/load, the circuit puzzle, tweaking item values, and game modules integration.
+- **Liu Peikun (GitHub: lpkpaco):** main game loop, inventory and status, title menu, save/load, the circuit puzzle, tweaking item values, game modules integration and [README.md](README.md).
 - **Li Zi Chen (GitHub: 404justli-jpg):** the map, early version of the sliding puzzle, fixing the curses display and video editing.
-- **(GitHub: tokimito):** the plot and endings, early save-progress work, and documentation.
+- **Leung Ka Lun Kimi (GitHub: tokimito):** the plot and endings, early save-progress work, and documentation.
 
 
 - **Wang Yung Yung (GitHub: dinowong0302-spec):** Sokoban (including random maps), and the first version of the radio puzzle
