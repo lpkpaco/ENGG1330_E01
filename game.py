@@ -28,6 +28,16 @@ def put(scr, y, x, text, attr=0):
     except curses.error:
         pass
 
+
+def item_slot(slot, item):
+    name = item if item else " "
+    text = str(slot) + " [" + name + "]"
+    if len(text) > 16:
+        text = str(slot) + "[" + name + "]"
+    if len(text) > 16:
+        text = text[:15] + "]"
+    return text
+
 def enter_ch(ch):
     if ch == 10 or ch == 13 or ch == curses.KEY_ENTER:
         return True
@@ -176,10 +186,10 @@ def init_gameplot(scr, name=None, hp=100, hunger=100, thirst=100, radiation=0,
         put(scr, 6, 64, "4 Store", white)
         put(scr, 8, 64, "5-8 Use/Toss", white)
         put(scr, 13, 64, "9 Dispose", white)
-        put(scr, 9, 63, "5 [" + (items[0] if items[0] else " ") + "]", white)
-        put(scr, 10, 63, "6 [" + (items[1] if items[1] else " ") + "]", white)
-        put(scr, 11, 63, "7 [" + (items[2] if items[2] else " ") + "]", white)
-        put(scr, 12, 63, "8 [" + (items[3] if items[3] else " ") + "]", white)
+        put(scr, 9, 63, item_slot(5, items[0]), white)
+        put(scr, 10, 63, item_slot(6, items[1]), white)
+        put(scr, 11, 63, item_slot(7, items[2]), white)
+        put(scr, 12, 63, item_slot(8, items[3]), white)
         box(scr, 17, 0, 7, 80, white)
         put(scr, 17, 2, " DIALOGUE / INPUT ", white)
         for i in range(len(dialogue_lines)):
@@ -749,10 +759,10 @@ def main(stdscr, hp=100, hunger=100, thirst=100, radiation=0, loc=1, items=None,
         put(stdscr, 13, 64, "9 Dispose", white)
         put(stdscr, 14, 64, "0 End day", white)
         put(stdscr, 15, 64, "C Craft", white)
-        put(stdscr, 9, 63, "5 [" + (items[0] if items[0] else " ") + "]", white)
-        put(stdscr, 10, 63, "6 [" + (items[1] if items[1] else " ") + "]", white)
-        put(stdscr, 11, 63, "7 [" + (items[2] if items[2] else " ") + "]", white)
-        put(stdscr, 12, 63, "8 [" + (items[3] if items[3] else " ") + "]", white)
+        put(stdscr, 9, 63, item_slot(5, items[0]), white)
+        put(stdscr, 10, 63, item_slot(6, items[1]), white)
+        put(stdscr, 11, 63, item_slot(7, items[2]), white)
+        put(stdscr, 12, 63, item_slot(8, items[3]), white)
         box(stdscr, 17, 0, 7, 80, white)
         put(stdscr, 17, 2, " DIALOGUE / INPUT ", white)
         put(stdscr, 19, 2, ("> " + status)[:76], white)

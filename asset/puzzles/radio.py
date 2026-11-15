@@ -161,9 +161,9 @@ def radio_puzzle(stdscr=None, name="You", play_plot=False):
                 i = i + 1
             scr.addstr(9, 2, "Target: all tubes at 85 C. Burnout at 100 C.", white)
             scr.addstr(11, 2, "Heating effects:   A     B     C", white)
-            scr.addstr(12, 2, "Tube A:           +5     0    -5", white)
-            scr.addstr(13, 2, "Tube B:           -5    +5     0", white)
-            scr.addstr(14, 2, "Tube C:            0    -5   +10", white)
+            scr.addstr(12, 2, "Tube A:           +5    -5     0", white)
+            scr.addstr(13, 2, "Tube B:            0    +5    -5", white)
+            scr.addstr(14, 2, "Tube C:           -5     0   +10", white)
             scr.addstr(16, 2, "W/S or Up/Down: select tube", white)
             scr.addstr(17, 2, "A/D or Left/Right: cool / heat  (-5% battery)", white)
             scr.addstr(18, 2, "Q: quit", white)
@@ -198,7 +198,7 @@ def radio_puzzle(stdscr=None, name="You", play_plot=False):
                 if battery == 0:
                     break
 
-        if battery < 10 or temperatures != [85, 85, 85]:
+        if temperatures != [85, 85, 85]:
             wait_lines(scr, ["Battery too low. The radio died."])
             return False
 
