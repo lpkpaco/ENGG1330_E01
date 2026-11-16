@@ -117,10 +117,13 @@ If you gather all four radio parts, craft the radio with C, and get the tubes st
 We used the course Docker environment **engg1330-project:2026-v03** (`COURSE_ENVIRONMENT_VERSION=2026-v03`). The game only uses the standard library and the packages that already come with the container like curses and pyfiglet.
 
 ## Run command
+To start the game, install the requirements (they are exported from the docker requirement.txt and no additional library is used) and run `main.py`.
 
 In the directory containing compose.yaml, run:
 `docker compose build`
 `docker compose run --rm game`
+
+If the game doesn't run or there are errors, use `docker compose build`, `docker compose run --rm game bash` then `python main.py`.
 
 The game should start automatically.
 
