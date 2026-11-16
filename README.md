@@ -119,7 +119,7 @@ In the directory containing compose.yaml, run:
 The game should start automatically.
 
 ## Tests and known limitations
-
+We playtested the game in the course Docker environment on an 80×24 terminal. That covered a new game and the intro, saving and loading, moving around the map, using and discarding items, all 4 puzzles and both the ordinary and hidden endings.
 
 Known issues / limitations:
 

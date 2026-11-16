@@ -64,6 +64,8 @@ def generate_circuit(difficulty, renderx, rendery, stdscr=None):
         end_y = secrets.SystemRandom().randint(4, 4 + rendery - 1)
         stdscr.addstr(start_y, 0, objects[5])
         stdscr.addstr(end_y, renderx-1, objects[6])
+        stdscr.addstr(0, 0, "Arrows to move, Space to change a tile or check if it's blocked".ljust(78))
+        stdscr.addstr(1, 0, "Enter to see if the path connects, Q to quit".ljust(78))
         blocked_coor = []
         for i in range(0, difficulty):
             while True:
@@ -86,10 +88,10 @@ def generate_circuit(difficulty, renderx, rendery, stdscr=None):
                 return False
             if key == "KEY_UP":
                 if currenty - 1 < 4:
-                    stdscr.addstr(0, 0, "Cannot move out of boundary".ljust(40))
+                    stdscr.addstr(2, 0, "Cannot move out of boundary".ljust(40))
                     continue
                 elif get_char(stdscr, currenty - 1, currentx) == "X":
-                    stdscr.addstr(0, 0, "Cannot move onto blocked positions".ljust(40))
+                    stdscr.addstr(2, 0, "Cannot move onto blocked positions".ljust(40))
                     continue
                 else:
                     stdscr.chgat(currenty, currentx, 1, color_normal)
@@ -100,10 +102,10 @@ def generate_circuit(difficulty, renderx, rendery, stdscr=None):
                     stdscr.refresh()
             elif key == "KEY_DOWN":
                 if currenty + 1 > 3 + rendery:
-                    stdscr.addstr(0, 0, "Cannot move out of boundary".ljust(40))
+                    stdscr.addstr(2, 0, "Cannot move out of boundary".ljust(40))
                     continue
                 elif get_char(stdscr, currenty + 1, currentx) == "X":
-                    stdscr.addstr(0, 0, "Cannot move onto blocked positions".ljust(40))
+                    stdscr.addstr(2, 0, "Cannot move onto blocked positions".ljust(40))
                     continue
                 else:
                     stdscr.chgat(currenty, currentx, 1, color_normal)
@@ -114,10 +116,10 @@ def generate_circuit(difficulty, renderx, rendery, stdscr=None):
                     stdscr.refresh()
             elif key == "KEY_LEFT":
                 if currentx - 1 < 0:
-                    stdscr.addstr(0, 0, "Cannot move out of boundary".ljust(40))
+                    stdscr.addstr(2, 0, "Cannot move out of boundary".ljust(40))
                     continue
                 elif get_char(stdscr, currenty, currentx - 1) == "X":
-                    stdscr.addstr(0, 0, "Cannot move onto blocked positions".ljust(40))
+                    stdscr.addstr(2, 0, "Cannot move onto blocked positions".ljust(40))
                     continue
                 else:
                     stdscr.chgat(currenty, currentx, 1, color_normal)
@@ -128,10 +130,10 @@ def generate_circuit(difficulty, renderx, rendery, stdscr=None):
                     stdscr.refresh()
             elif key == "KEY_RIGHT":
                 if currentx + 1 > renderx - 1:
-                    stdscr.addstr(0, 0, "Cannot move out of boundary".ljust(40))
+                    stdscr.addstr(2, 0, "Cannot move out of boundary".ljust(40))
                     continue
                 elif get_char(stdscr, currenty, currentx + 1) == "X":
-                    stdscr.addstr(0, 0, "Cannot move onto blocked positions".ljust(40))
+                    stdscr.addstr(2, 0, "Cannot move onto blocked positions".ljust(40))
                     continue
                 else:
                     stdscr.chgat(currenty, currentx, 1, color_normal)
@@ -142,26 +144,26 @@ def generate_circuit(difficulty, renderx, rendery, stdscr=None):
                     stdscr.refresh()
             elif key in ("\n", "\r", "KEY_ENTER", "PADENTER"):
                 if validate(stdscr, objects, start_y, end_y, renderx, rendery):
-                    stdscr.addstr(0, 0, "Success".ljust(40))
+                    stdscr.addstr(2, 0, "Success".ljust(40))
                     stdscr.refresh()
                     return True
                 else:
-                    stdscr.addstr(0, 0, "Failed".ljust(40))
+                    stdscr.addstr(2, 0, "Failed".ljust(40))
                     stdscr.refresh()
             elif key == " ":
                 decoded_char = get_char(stdscr, currenty, currentx)
                 if (currentx, currenty) not in blocked_coor:
-                    stdscr.addstr(1, 0, "Not blocked")
+                    stdscr.addstr(3, 0, "Not blocked".ljust(40))
                     if decoded_char == objects[0] or decoded_char == objects[4]:
                         stdscr.addstr(currenty, currentx, objects[1], color_selected)
                     elif decoded_char in objects[1:4]:
                         index = objects.index(decoded_char)
                         stdscr.addstr(currenty, currentx, objects[index + 1], color_selected)
                     else:
-                        stdscr.addstr(0, 0, "Unexpected Exception")
+                        stdscr.addstr(2, 0, "Unexpected Exception".ljust(40))
                     stdscr.refresh()
                 else:
-                    stdscr.addstr(1, 0, "Blocked")
+                    stdscr.addstr(3, 0, "Blocked".ljust(40))
                     stdscr.addstr(currenty, currentx, "X", color_blocked)
                     currentx, currenty = lastx, lasty
                     stdscr.chgat(currenty, currentx, 1, color_selected)

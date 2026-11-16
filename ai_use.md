@@ -1,6 +1,6 @@
 # AI Use
 
-Generative AI used:
+Generative AI used: GitHub Copilot and Grok, check details below.
 
 If no group member used AI, no entries are needed. Otherwise add an entry for each substantive use, including assistance with code, design, debugging, documentation or videos.
 
