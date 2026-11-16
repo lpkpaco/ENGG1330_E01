@@ -1,6 +1,6 @@
 # 7 Days
 
-ENGG1330 Group Project, Group E01
+ENGG1330 Group Project, Subclass E, Group E01
 
 In 7 Days, you play as someone who just locked themselves in a shelter after a nuclear war broadcast. The government says rescue comes in seven days, so you have to stay alive until then. Food, water, medicine and radio parts are spread around four places on the map, and some of them are locked behind puzzles.
 
@@ -13,6 +13,8 @@ If you just survive until day 7, a “rescue” team shows up and takes you away
 
 ## Name
 
+#### Subclass E, Group E01
+
 Liu Peikun
 
 Li Zi Chen
@@ -23,6 +25,10 @@ Wang Yung Yung  (Applied for leave of absence and quitted in the later stage of 
 
 ## Development log
 Check https://github.com/lpkpaco/ENGG1330_E01 for commit records, detailed contributions, branches and pull requests. SonarQube Cloud is used for checking potential issues and quality gate check but **no generative AI features provided by them are used because we dont have the money to afford the paid tiers and services.**
+### Trailer and technical demo videos
+[Trailer](https://drive.google.com/file/d/1MvljkSv2n5rrOXcApphwgBfmQx-AkKKm/view?usp=drive_link)
+
+[Technical Demo](https://drive.google.com/file/d/19WJ9Hb73DoWO0jT6cY4Ijao6AY07ovdM/view?usp=drive_link)
 
 ### Brief development log
 <img src="asset/readme/devlog.png">
