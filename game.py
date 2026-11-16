@@ -29,6 +29,24 @@ def put(scr, y, x, text, attr=0):
         pass
 
 
+def wait_for_size(scr, min_w=80, min_h=24):
+    while True:
+        h, w = scr.getmaxyx()
+        if h >= min_h and w >= min_w:
+            return True
+        scr.erase()
+        put(scr, 0, 0, "Window too small.")
+        put(scr, 1, 0, "Resize to least " + str(min_w) + "x" + str(min_h) + ".")
+        put(scr, 2, 0, "Now: " + str(w) + "x" + str(h))
+        put(scr, 4, 0, "Waiting for resize and press Q to quit if u want")
+        scr.refresh()
+        scr.timeout(200)
+        ch = scr.getch()
+        scr.timeout(-1)
+        if ch == ord("q") or ch == ord("Q"):
+            return False
+
+
 def item_slot(slot, item):
     name = item if item else " "
     text = str(slot) + " [" + name + "]"
@@ -154,13 +172,9 @@ def init_gameplot(scr, name=None, hp=100, hunger=100, thirst=100, radiation=0,
     scr.keypad(True)
 
     def draw_frame(dialogue_lines, footer="Enter: continue    Q: skip intro"): #blud this drawing code killing me imma killmyself
-        h, w = scr.getmaxyx()
-        scr.erase()
-        if h < 24 or w < 80:
-            put(scr, 0, 0, "Resize to 80x24 by urself", white)
-            put(scr, 1, 0, "Now: " + str(w) + "x" + str(h), white)
-            scr.refresh()
+        if not wait_for_size(scr):
             return False
+        scr.erase()
         box(scr, 0, 0, 9, 32, white)
         put(scr, 0, 2, " STATS ", white)
         put(scr, 2, 2, "HP / Health", white)
@@ -213,12 +227,9 @@ def init_gameplot(scr, name=None, hp=100, hunger=100, thirst=100, radiation=0,
         curses.curs_set(1)
         while True:
             if not draw_frame(["Enter your name: " + buf], "Enter: confirm"):
-                ch = scr.getch()
-                if ch == ord("q") or ch == ord("Q"):
-                    curses.curs_set(0)
-                    init = True
-                    return "You"
-                continue
+                curses.curs_set(0)
+                init = True
+                return "You"
             ch = scr.getch()
             if enter_ch(ch):
                 name = buf.strip()
@@ -241,11 +252,8 @@ def init_gameplot(scr, name=None, hp=100, hunger=100, thirst=100, radiation=0,
         page = 0
         while page < len(wrapped):
             if not draw_frame(wrapped[page:page + 4]):
-                ch = scr.getch()
-                if ch == ord("q") or ch == ord("Q"):
-                    init = True
-                    return name
-                continue
+                init = True
+                return name
             action = wait_key()
             if action == "q":
                 init = True
@@ -714,16 +722,9 @@ def main(stdscr, hp=100, hunger=100, thirst=100, radiation=0, loc=1, items=None,
         yellow = curses.color_pair(4)
         white = curses.color_pair(5)
         cyan = curses.color_pair(6)
-        h, w = stdscr.getmaxyx()
+        if not wait_for_size(stdscr):
+            return
         stdscr.erase()
-        if h < 24 or w < 80:
-            put(stdscr, 0, 0, "Resize to 80x24 by urself", white)
-            put(stdscr, 1, 0, "Now: " + str(w) + "x" + str(h), white)
-            stdscr.refresh()
-            ch = stdscr.getch()
-            if ch == ord("q") or ch == ord("Q"):
-                return
-            continue
         box(stdscr, 0, 0, 9, 32, white)
         put(stdscr, 0, 2, " STATS ", white)
         put(stdscr, 2, 2, "HP / Health", white)

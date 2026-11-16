@@ -31,7 +31,7 @@ Check https://github.com/lpkpaco/ENGG1330_E01 for commit records, detailed contr
 
 The point of the game is to keep your Health above 0 for 7 days, or fix the radio and get the hidden ending from day 6 onwards.
 
-The game is made for an 80x24 terminal. If your window is smaller than that, it stops and tells you to resize it.
+The game is made for an 80x24 terminal. If your window is smaller than that, it pauses and asks you to resize to at least 80x24 (Q quits).
 
 On the title menu, press `1` for a new game or `2` to load a save. A new game asks for your name and then plays a short intro. Enter or Space goes to the next line, and Q skips the intro (it also skips later dialogue). On the load screen, press `1`–`9` to open a save, D to delete all saves (it asks you to confirm first), or Q to go back.
 
@@ -129,7 +129,6 @@ Known issues / limitations:
 
 - Hunger / Thirst / Health changes happen at the end of the day, not every action. The puzzles also have no timer to force player to solve them in a specific time limit.
 
-- There are no mechanisms for detecting whether the terminal size is less than 80x24 and some render issues may occur if the terminal is smaller than that size.
 
 ## Contributions and sources
 

@@ -1,5 +1,5 @@
 import curses, locale
-from game import main
+from game import main, wait_for_size
 from asset.modules.filehandle import readsave, loadsave, deletesaves
 locale.setlocale(locale.LC_ALL, "")
 
@@ -22,6 +22,8 @@ def draw_main_menu(menuscr, title):
 
 def pick_save(menuscr):
     while True:
+        if not wait_for_size(menuscr):
+            return None
         files = readsave()
         menuscr.clear()
         menuscr.addstr(1, 2, "LOAD GAME")
@@ -68,24 +70,25 @@ def pick_save(menuscr):
 
 def load_main_menu(menuscr):
     curses.start_color()
-    menuscr.clear()
+    menuscr.keypad(True)
     import pyfiglet
     titletbd = "7 Days"
     title = pyfiglet.figlet_format(titletbd, font="big", justify="center", width=80)
-    draw_main_menu(menuscr, title)
-    menuscr.keypad(True)
     while True:
+        if not wait_for_size(menuscr):
+            return
+        draw_main_menu(menuscr, title)
         ch = menuscr.getch()
         if ch in (ord("q"), ord("Q")):
             return
+        if ch == curses.KEY_RESIZE:
+            continue
         if ch == ord("1"):
             main(menuscr)
-            draw_main_menu(menuscr, title)
         elif ch == ord("2"):
             data = pick_save(menuscr)
             if data != None:
                 main(menuscr, save=data)
-            draw_main_menu(menuscr, title)
 
 if __name__ == "__main__":
     curses.wrapper(load_main_menu)
